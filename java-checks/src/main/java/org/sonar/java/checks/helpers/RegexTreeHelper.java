@@ -114,6 +114,26 @@ public class RegexTreeHelper {
     return false;
   }
 
+  public static boolean canReach(AutomatonState start, AutomatonState goal) {
+    return canReach(start, goal, new HashSet<>());
+  }
+
+  private static boolean canReach(AutomatonState start, AutomatonState goal, Set<AutomatonState> visited) {
+    if (start == goal) {
+      return true;
+    }
+    if (visited.contains(start)) {
+      return false;
+    }
+    visited.add(start);
+    for (AutomatonState successor : start.successors()) {
+      if (canReach(successor, goal, visited)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * If both sub-automata have allowPrefix set to true, this method will check whether auto1 intersects
    * the prefix of auto2 or auto2 intersects the prefix of auto1. This is different than checking whether
