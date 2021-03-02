@@ -195,6 +195,10 @@ public class JParser {
     }
 
     List<IProblem> errors = Stream.of(astNode.getProblems()).filter(IProblem::isError).collect(Collectors.toList());
+
+    // displaying all errors
+    errors.stream().forEach(error -> System.err.println(error.getSourceLineNumber() + " : " + error.getMessage()));
+
     Optional<IProblem> possibleSyntaxError = errors.stream().filter(IS_SYNTAX_ERROR).findFirst();
     if (possibleSyntaxError.isPresent()) {
       IProblem syntaxError = possibleSyntaxError.get();
